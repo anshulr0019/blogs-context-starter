@@ -1,44 +1,39 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../Context/AppContext';
-import Spinner from './Spinner';
+import React, { useContext } from "react";
+import Spinner from "./Spinner";
+import { AppContext } from "../Context/AppContext";
 
 const Blogs = () => {
-
-  //consume
-  const {posts, loading} = useContext(AppContext);
-  console.log("Printing inside blogs component")
-  console.log(posts);
-
-  return (
-    <div>
-        {
-          loading ? 
-          (<Spinner/>) 
-          : 
-          (
-            posts.length === 0 ? (<div>
-              <p>No Post Found</p>
-            </div>) : (posts.map( (post) => (
-              <div key={post.id}>
-                <p className='font-bold'>{post.title}</p>
-                <p>
-                  By <span>{post.author}</span> On <span>{post.category}</span>
-                </p>
-                <p>
-                  Posted on {post.date}
-                </p>
-                <p>{post.content}</p>
-                <div>
-                  {post.tag.map( (tag, index) => {
-                    return <span key={index}>{'#${tag}'}</span>
-                  })}
+    // Consume
+    const { posts, loading } = useContext(AppContext);
+    console.log(posts);
+    return (
+        <div className="max-w-[620px] w-11/12 py-3 flex flex-col gap-y-7 my-[100px] mx-auto">
+            {loading ? (
+                <Spinner />
+            ) : posts.length === 0 ? (
+                <div className="">
+                    <p className="">No Post Found</p>
                 </div>
-              </div>
-            )))
-          )
-        }
-    </div>
-  )
-}
+            ) : (
+                posts.map((post) => {
+                    return <div key={post.id} className="">
+                        <p className="font-bold text-sm">{post.title}</p>
+                        <p className="text-[14px]">
+                            By <span className="italic">{post.author}</span> or{" "}
+                            <span className="underline font-bold">{post.category}</span>
+                        </p>
+                        <p className="text-[14px]">Posted on {post.date}</p>
+                        <p className="text-[16px] mt-[13px]">{post.content}</p>
+                        <div className="flex flex-wrap gap-x-2 items-center">
+                            {post.tags.map((tag, index) => {
+                                return <span key={index} className="text-xs font-semibold underline text-blue-700 cursor-pointer">#{tag}</span>;
+                            })}
+                        </div>
+                    </div>;
+                })
+            )}
+        </div>
+    );
+};
 
 export default Blogs;

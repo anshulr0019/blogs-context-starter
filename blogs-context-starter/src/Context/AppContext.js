@@ -12,27 +12,25 @@ export default function AppContextProvider({children}) {
 
     //data filling
     async function fetchBlogPosts(page = 1) {
-        setLoading(true);
-        let url = '${baseUrl}?page=${page}';
-        console.log("printing the url");
-        console.log(url);
+        setLoading(true)
+        let url = `${baseUrl}?page=${page}`;
         try {
             const result = await fetch(url);
             const data = await result.json();
-            console.log(data);
-            fetchBlogPosts();
+            console.log(data)
             setPage(data?.page);
             setPosts(data?.posts);
-            setTotalPages(data?.totalPages)
+            setTotalPages(data?.totalPages);
         }
-        catch(error) {
-            console.log("error in fetching data")
+        catch (e) {
+            console.log("Error")
             setPage(1);
             setPosts([]);
             setTotalPages(null);
         }
         setLoading(false);
     }
+
 
     function handlePageChange(page) {   
         setPage(page);
